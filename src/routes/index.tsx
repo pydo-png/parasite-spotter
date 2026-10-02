@@ -52,7 +52,7 @@ function Index() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    setApiUrl(localStorage.getItem("malaria_api_url") ?? import.meta.env.VITE_MALARIA_API_URL ?? "");
+    setApiUrl(localStorage.getItem("malaria_api_url") ?? import.meta.env['VITE_MALARIA_API_URL'] ?? "");
   }, []);
 
   const addFiles = useCallback((files: File[], truth?: string) => {
