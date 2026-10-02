@@ -30,7 +30,7 @@ const SAMPLES = [
   { src: u3, name: "uninfected_03.jpg", truth: "uninfected" },
 ] as const;
 
-type Item = { id: string; file: File; url: string; truth?: string; score?: number; label?: "Positive" | "Negative" };
+type Item = { id: string; file: File; url: string; truth?: string | undefined; score?: number | undefined; label?: "Positive" | "Negative" | undefined };
 
 function demoScore(item: Item) {
   let h = 0;
