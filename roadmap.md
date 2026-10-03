@@ -1,0 +1,2 @@
+- [ ] Build a presentation based on the SmearScan project, with clearly marked missing evaluation results.
+- [ ] Link it from the app and verify viewing, navigation, and printable export.
