@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useRef, useState } from "react";
 import p1 from "@/assets/samples/p1.jpg";
 import p2 from "@/assets/samples/p2.jpg";
@@ -14,6 +14,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Upload blood smear images and get AI malaria parasite predictions from an EfficientNetV2S classifier." },
       { property: "og:title", content: "SmearScan — Malaria Parasite Detection" },
       { property: "og:description", content: "Batch-analyze blood smear images for malaria parasites with a deep learning model." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Index,
@@ -127,7 +129,7 @@ function Index() {
               <p className="font-mono text-xs text-muted-foreground">Malaria outcome classifier · EfficientNetV2S</p>
             </div>
           </div>
-          <ApiSettings apiUrl={apiUrl} setApiUrl={setApiUrl} />
+          <div className="flex items-center gap-3"><Link to="/slides" className="rounded-md border px-3 py-1.5 text-sm font-medium hover:bg-muted">Presentation →</Link><ApiSettings apiUrl={apiUrl} setApiUrl={setApiUrl} /></div>
         </div>
       </header>
 
