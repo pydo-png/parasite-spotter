@@ -32,9 +32,11 @@ const notes = [
   "Invite questions. If asked whether it replaces microscopy, answer no: it supports review, not diagnosis.",
 ];
 
-const firstSlide = deck[0];
-if (!firstSlide) throw new Error("Presentation has no slides");
-function getSlide(i: number) { return deck[i] ?? firstSlide; }
+function getSlide(i: number): (typeof deck)[number] {
+  const slide = deck[i] ?? deck[0];
+  if (!slide) throw new Error("Presentation has no slides");
+  return slide;
+}
 
 function clampIndex(value: number) { return Math.max(0, Math.min(deck.length - 1, value)); }
 function getInitialIndex() {
@@ -52,7 +54,7 @@ function SlidesPage() {
   const [selected, setSelected] = useState<number[]>([]);
   const [order, setOrder] = useState<number[]>(() => deck.map((_, i) => i));
   const [hidden, setHidden] = useState<number[]>([]);
-  const [startTime] = useState(() => Date.now());
+  const [startTime, setStartTime] = useState(0);
   const [elapsed, setElapsed] = useState(0);
   const [cursorHidden, setCursorHidden] = useState(false);
   const touch = useRef<number | null>(null);
@@ -69,6 +71,7 @@ function SlidesPage() {
 
   useEffect(() => {
     setIsPrint(new URLSearchParams(window.location.search).has("print"));
+    setStartTime(Date.now());
     const initial = getInitialIndex();
     setIndex(initial);
     const onPop = () => setIndex(getInitialIndex());
@@ -99,7 +102,7 @@ function SlidesPage() {
     return () => window.removeEventListener("keydown", onKey);
   }, [move, presenting]);
   useEffect(() => {
-    if (!presenting) return;
+    if (!presenting || !startTime) return;
     const timer = window.setInterval(() => setElapsed(Math.floor((Date.now() - startTime) / 1000)), 1000);
     return () => window.clearInterval(timer);
   }, [presenting, startTime]);
